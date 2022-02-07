@@ -12,7 +12,9 @@ async function delete_all_objects(){
     if (err) console.log(err, err.stack); // an error occurred
     else     console.log(data);           // successful response
   });
-  */ let result =   await s3.listObjects(params).promise();
+  */ 
+   //Listing the objects form S3 location.
+     let result =   await s3.listObjects(params).promise();
      let list_object =[];
      let keys =[];
      list_object = result.$response.data.Contents;
@@ -24,8 +26,8 @@ async function delete_all_objects(){
             Bucket:'ed-raw-data-bucket-123',                                     //But the bucket Name from where you want to delete the data.
             Key: list_object[i].Key
           }
+          //Deleting the objects from s3 location.
           await s3.deleteObject(deleteparams).promise((data) => console.log(data), (error) => console.log(error));
-        
      }
      console.log("The deleted data in table reset is")
      console.log(keys)
