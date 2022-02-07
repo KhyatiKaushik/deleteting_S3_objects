@@ -1,11 +1,11 @@
 var AWS = require('aws-sdk');
 AWS.config.update({region: 'us-east-2'});
 
-async function delete_all_objects(client_id){
+async function delete_all_objects(){
   var s3 = new AWS.S3({apiVersion: '2006-03-01'});
   const params = {
-            Bucket: 'ed-raw-data-bucket-123',
-            Prefix: 'load_type=bulkload/client_id='+client_id+'/'
+            Bucket: 'ed-raw-data-bucket-123',                                     //But the bucket Name from where you want to delete the data.
+            Prefix: 'load_type=bulkload/'                                         // Prefix to navigate to the location where you want to delete the data to a certail S3 folder.
   };
   /*list the table name which will be deleted   
   response_list= s3.listObjects(params, function(err, data) {
@@ -21,7 +21,7 @@ async function delete_all_objects(client_id){
      for(let i=0;i < list_object.length ;i++){
           keys.push(list_object[i].Key)
           let deleteparams={
-            Bucket:'ed-raw-data-bucket-123',
+            Bucket:'ed-raw-data-bucket-123',                                     //But the bucket Name from where you want to delete the data.
             Key: list_object[i].Key
           }
           await s3.deleteObject(deleteparams).promise((data) => console.log(data), (error) => console.log(error));
@@ -30,5 +30,3 @@ async function delete_all_objects(client_id){
      console.log("The deleted data in table reset is")
      console.log(keys)
 }
-
-delete_all_objects('2.16.840.1.113883.3.140.000101')
